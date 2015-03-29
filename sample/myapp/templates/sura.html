@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block nav_bar %}
+<form class="navbar-form navbar-left" action=".">
+  <div class="form-group">
+      <select class="form-control" name="trans">
+        <option>select a translation</option>
+    {% for translation in trans %}
+    <option value="{{translation.pk}}">{{translation.name}}</option>
+    {%endfor%}
+  </select>
+  </div>
+  <button type="submit" class="btn btn-default">Go</button>
+</form>
+{% endblock %} 
+{% block body %}
+<div class="container">	
+	<div class="row">	
+	  <div class="col-md-8 col-md-offset-2">	  	
+	    <h1>{{sura.number}}. {{sura.name}} - {{sura.ename}}</h1>
+	  	{% for aya,translation in ayas %}
+    		<p class="arab" dir='rtl'>{{ aya.text }}</p>
+            <p class="text-muted">{{ translation.text }}</p><hr/>
+    	{% endfor %}
+	  </div>	 
+	</div>
+</div>
+{% endblock %}  

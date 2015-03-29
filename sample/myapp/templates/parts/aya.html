@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block body %}
+<div class="container">	
+	<div class="row">	
+	  <div class="col-md-8 col-md-offset-2">
+	  	{% for word in words %}
+	  	<a class="arab" href="{{ word.get_absolute_url }}">{{ word.token }}</a> 
+	  	{% endfor %}
+	  	<p class="translation">{{ translation.text }}</p>
+	  </div>
+	</div>
+</div>
+{% endblock %} 

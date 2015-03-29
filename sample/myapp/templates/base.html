@@ -16,6 +16,16 @@
 </head>
 
 <body>    
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">      
+          <a class="navbar-brand" href="{% url 'quran_index' %}">Home</a>
+        </div>
+        <div class="collapse navbar-collapse">
+          {% block nav_bar %}{% endblock %} 
+        </div>
+      </div>
+    </nav>
     {% block body %}
     {% endblock %}   
     {% block javascript %}
