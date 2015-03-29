@@ -39,7 +39,7 @@ class Aya(models.Model):
     """Aya (verse) of the Quran"""
 
     number = models.IntegerField(verbose_name='Aya Number')
-    sura = models.ForeignKey(Sura, related_name='ayas', db_index=True)
+    sura = models.ForeignKey(Sura, related_name='ayas')
     text = models.TextField(blank=False)
 
     class Meta:
@@ -73,9 +73,9 @@ class QuranTranslation(models.Model):
 
 class TranslatedAya(models.Model):
     """Translation of an aya"""
-    sura = models.ForeignKey(Sura, related_name='translations', db_index=True)
-    aya = models.ForeignKey(Aya, related_name='translations', db_index=True)
-    translation = models.ForeignKey(QuranTranslation, db_index=True)
+    sura = models.ForeignKey(Sura, related_name='translations')
+    aya = models.ForeignKey(Aya, related_name='translations')
+    translation = models.ForeignKey(QuranTranslation)
     text = models.TextField(blank=False)
 
     class Meta:
@@ -89,7 +89,7 @@ class TranslatedAya(models.Model):
 class Root(models.Model):
     """Root word"""
 
-    letters = models.CharField(max_length=10, unique=True, db_index=True) # to my knowledge, there is no root with more than 7 letters
+    letters = models.CharField(max_length=10, unique=True) # to my knowledge, there is no root with more than 7 letters
     ayas = models.ManyToManyField(Aya, through='Word')
 
     @models.permalink
@@ -105,8 +105,8 @@ class Root(models.Model):
 
 class Lemma(models.Model):
     """Distinct Arabic word (lemma) in the Quran"""
-    token = models.CharField(max_length=50, unique=True, db_index=True)
-    root = models.ForeignKey(Root, null=True, related_name='lemmas', db_index=True)
+    token = models.CharField(max_length=50, unique=True)
+    root = models.ForeignKey(Root, null=True, related_name='lemmas')
     ayas = models.ManyToManyField(Aya, through='Word')
 
     class Meta:
@@ -125,12 +125,14 @@ class Lemma(models.Model):
 class Word(models.Model):
     """Arabic word in the Quran"""
 
-    sura = models.ForeignKey(Sura, related_name='words', db_index=True)
-    aya = models.ForeignKey(Aya, related_name='words', db_index=True)
+    sura = models.ForeignKey(Sura, related_name='words')
+    aya = models.ForeignKey(Aya, related_name='words')
     number = models.IntegerField()
-    token = models.CharField(max_length=50, db_index=True)
-    root = models.ForeignKey(Root, null=True, related_name='words', db_index=True)
-    lemma = models.ForeignKey(Lemma, db_index=True)
+    token = models.CharField(max_length=50)
+    root = models.ForeignKey(Root, null=True, related_name='words')
+    lemma = models.ForeignKey(Lemma)
+    ename = models.CharField(max_length=50, blank=True)
+    translation = models.CharField(max_length=200,blank=True)
 
     class Meta:
         unique_together = (('aya', 'number'))

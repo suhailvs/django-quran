@@ -175,6 +175,31 @@ def import_morphology():
     return import_morphology_txt()
 
 
+def import_word_translations():
+    f = open(path_to('corpus/word_by_word_meaning.txt'))
+
+    for line in f:
+        parts = line.strip().split('|')
+        sura_number = 0
+        try:
+            sura_number = int(parts[0])
+        except ValueError:
+            continue
+        aya_number = int(parts[1])
+        word_number = int(parts[2])
+        ename = parts[3]
+        translation = parts[4]
+
+        cur_word = Word.objects.filter(sura=sura_number, aya=aya_number, number=word_number)
+        if len(cur_word) == 1:
+            cur_word = cur_word[0]
+            cur_word.ename = ename
+            cur_word.translation = translation
+            cur_word.save()
+            print '%s:%s:%s' %(parts[0],parts[1],parts[2])
+        print '-'*10
+        print 'not exist, %s:%s:%s' %(parts[0],parts[1],parts[2])
+
 def test_data(verbosity):
     verbosity = int(verbosity)
     print verbosity
