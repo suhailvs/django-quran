@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block body %}
+<div class="container">
+	<h1>HolyQuran</h1>
+	<div class="row">
+	{% for part in suras %}
+	  <div class="col-md-4">
+	  	{% for sura in part %}
+    		<div class="arab"><a href="{{ sura.get_absolute_url }}">{{ sura.name }} ({{sura.ename}})</a></div>
+    	{% endfor %}
+	  </div>
+	 {% endfor %}
+	</div>
+</div>
+{% endblock %}   

@@ -2,3 +2,4 @@
 build
 dist
 django_quran.egg-info
+*.sqlite3

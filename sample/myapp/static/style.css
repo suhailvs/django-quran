@@ -1,0 +1,11 @@
+@font-face {
+  font-family: 'Scheherazade';
+  src: url('Scheherazade-R.woff');
+}	
+.arab {
+    font-size:25px;
+    font-family:'Scheherazade', serif;
+} 
+.box {
+	border: 1px solid #ccc; 
+}
