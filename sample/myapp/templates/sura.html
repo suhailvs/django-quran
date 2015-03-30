@@ -18,8 +18,8 @@
 	  <div class="col-md-8 col-md-offset-2">	  	
 	    <h1>{{sura.number}}. {{sura.name}} - {{sura.ename}}</h1>
 	  	{% for aya,translation in ayas %}
-    		<p class="arab" dir='rtl'>{{ aya.text }}</p>
-            <p class="text-muted">{{ translation.text }}</p><hr/>
+    		<p class="arab" dir='rtl'><a style="text-decoration:none;color:#000" href="{{aya.get_absolute_url}}">{{ aya.text }}</a></p>
+        <p class="text-muted">{{ translation.text }}</p><hr/>
     	{% endfor %}
 	  </div>	 
 	</div>
