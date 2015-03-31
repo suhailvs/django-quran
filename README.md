@@ -1,20 +1,24 @@
 # Installation
 
-## check sample project
+## Run the sample project
 
 1. Download(or clone) `django-quran`
-2. Run the sample.
+2. Run the sample(`migrate`,`loaddata` and `runserver`)
 
-    cd sample
-    ./manage.py runserver
+ie:
+
+    $ cd sample
+    $ ./manage.py migrate
+    $ ./manage.py quran_loaddata
+    $ ./manage.py runserver
 
 
-## on a custom project
+## On a custom project
 
 1. Download and install `django-quran`
-2. Add 'quran' to INSTALLED_APPS in `settings.py`
-3. Run `./manage.py migrate`
-4. Run `./manage.py quran_loaddata`
+2. Add `'quran'` to `INSTALLED_APPS` in `settings.py`
+3. Run `./manage.py migrate` and `./manage.py quran_loaddata`
+4. Run the server `./manage.py runserver`
 
 
 # Resources
