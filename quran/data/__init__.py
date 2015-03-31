@@ -12,7 +12,7 @@ from quran.buckwalter import *
 def path_to(fn):
     return path.join(path.dirname(__file__), fn)
 
-@transaction.commit_on_success
+@transaction.atomic
 def import_quran():
     d = parse(path_to('tanzil/quran-data.xml'))
     d2 = parse(path_to('tanzil/quran-uthmani.xml'))
@@ -40,12 +40,12 @@ def import_quran():
             text = aya.getAttribute('text')
             aya_model = Aya(sura=sura_model, number=index, text=text)
             aya_model.save()
-            print "%d:%d" % (sura_model.number, index)
+            print ("%d:%d" % (sura_model.number, index))
 
 
-@transaction.commit_on_success
+@transaction.atomic
 def import_translation_txt(path, translation):
-    print "Importing %s translation" % (translation.name)
+    print ("Importing %s translation" % (translation.name))
     f = open(path)
     ayas = Aya.objects.all()
     for aya in ayas:
@@ -55,7 +55,7 @@ def import_translation_txt(path, translation):
         line = line.strip()
         t = TranslatedAya(sura=aya.sura, aya=aya, translation=translation, text=line)
         t.save()
-        print "[%s] %d:%d" % (translation.name, aya.sura_id, aya.number)
+        print ("[%s] %d:%d" % (translation.name, aya.sura_id, aya.number))
 
 
 def import_translations():
@@ -125,7 +125,7 @@ def import_morphology_xml():
                 word = Word(sura=sura, aya=aya, number=number, token=token, root=root, lemma=lemma)
                 word.save()
 
-            print "[morphology] %d:%d" % (sura.number, aya.number)
+            print ("[morphology] %d:%d" % (sura.number, aya.number))
 
 
 def import_morphology_txt():
@@ -151,7 +151,7 @@ def import_morphology_txt():
             if sura_number is not sura.number:
                 sura = Sura.objects.get(number=sura_number)
             aya = Aya.objects.get(sura=sura, number=aya_number)
-            print "[morphology] %d:%d" % (sura.number, aya.number)
+            print ("[morphology] %d:%d" % (sura.number, aya.number))
 
         lemma = None
         dtoken = token
@@ -175,9 +175,30 @@ def import_morphology():
     return import_morphology_txt()
 
 
+def import_word_translations():
+    f = open(path_to('corpus/word_by_word_meaning.txt'))
+
+    for line in f:
+        parts = line.strip().split('|')
+        sura_number = 0
+        try:
+            sura_number = int(parts[0])
+        except ValueError:
+            continue
+        aya_number = int(parts[1])
+        word_number = int(parts[2])
+        ename = parts[3]
+        translation = parts[4]
+
+        cur_word = Word.objects.get(sura__number=sura_number, aya__number=aya_number, number=word_number)
+        cur_word.ename = ename
+        cur_word.translation = translation
+        cur_word.save()
+        if word_number == 1: print ('%s:%s' %(parts[0],parts[1]))
+        
 def test_data(verbosity):
     verbosity = int(verbosity)
-    print verbosity
+    print (verbosity)
     test_suite = unittest.TestLoader().loadTestsFromTestCase(DataIntegrityTestCase)
     unittest.TextTestRunner(verbosity=verbosity).run(test_suite)
 

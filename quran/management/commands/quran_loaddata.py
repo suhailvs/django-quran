@@ -19,5 +19,8 @@ class Command(NoArgsCommand):
         print "----- done importing translations. starting morphology -----"
         import_morphology()
 
-        print "----- done importing morphology. running tests -----"
+        print "----- done importing morphology. starting word by word translations -----"
+        import_word_translations()
+
+        print "----- done importing word by word translations. running tests -----"
         test_data(verbosity=options['verbosity'])

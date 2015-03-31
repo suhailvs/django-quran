@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block extra_head %}
+<style type="text/css">
+	a.arab{
+		font-size: 40px;
+		text-decoration: none;
+	}
+	a:hover{
+		font-weight: bold;
+		color: orange;
+	}
+	 a.tooltips span {
+	    display:none;
+	    font-size: 15px;
+	    padding:5px;
+	}
+	a.tooltips:hover span {
+	    display:inline;
+	    position:absolute;
+	    top: -50px;
+	    background:#ffffff;
+	    border:1px solid #cccccc;
+	    color:#6c6c6c;
+	}
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container">	
+	<div class="row">	
+	  <div class="col-md-8 col-md-offset-2">
+	  	{% for word in words %}
+	  	<a class="arab tooltips" href="{{ word.get_absolute_url }}">
+	  		{{ word.token }}
+	  		<span>{{word.translation}}</span>
+	  	</a> 
+	  	{% endfor %}
+	  	<hr>
+	  	<p class="translation">{{ translation.text }}</p>
+	  </div>
+	</div>
+</div>
+{% endblock %} 

@@ -1,3 +1,5 @@
 Yusuf Ali;Abdullah Yusuf Ali;Zekr.org;http://zekr.org/resources.html;yusufali.txt
 Shakir;Mohammad Habib Shakir;Zekr.org;http://zekr.org/resources.html;shakir.txt
 Pickthall;Mohammed Marmaduke William Pickthall;Zekr.org;http://zekr.org/resources.html;pickthall.txt
+Abdul Hameed;Cheriyamundam Abdul Hameed and Kunhi Mohammed Parappoor;tanzil.net;http://tanzil.net/trans/;mal.abdulhameed.txt
+Karakunnu and Vanidas;Muhammad Karakunnu and Vanidas Elayavoor;tanzil.net;http://tanzil.net/trans/;mal.karakunnu.txt
