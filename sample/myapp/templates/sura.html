@@ -21,7 +21,7 @@
 	    <h1>{{sura.number}}. {{sura.name}} - {{sura.ename}}</h1>
 	  	{% for aya,translation in ayas %}
     		<div class="arab" dir='rtl'>
-          <span onclick="playSound(this, '{{STATIC_URL}}audio/{{ sura.number|zfill:3 }}{{ aya.number|zfill:3 }}.mp3');">{{ aya.text }}</span> 
+          <span onclick="if (!any_audio_playing)playSound(this, '{{STATIC_URL}}audio/{{ sura.number|zfill:3 }}{{ aya.number|zfill:3 }}.mp3');">{{ aya.text }}</span> 
           <a style="font-size:70%;color:#ccc" href="{{aya.get_absolute_url}}">{{sura.number}}:{{aya.number}}</a>
         </div>
         <span class="text-muted">{{ translation.text }}</span><hr/>
@@ -33,15 +33,24 @@
 
 {% block javascript %}
 <script type="text/javascript">
-function playSound(el,soundfile) {
+var any_audio_playing = false;
+
+function playSound(el,soundfile){
   if (el.mp3) {
-    if(el.mp3.paused) el.mp3.play();
-  } else {        
+    if(el.mp3.paused) {
+      el.mp3.play();
+      any_audio_playing = true;
+    }
+  } else {
     el.mp3 = new Audio(soundfile);
     el.mp3.play();        
-    el.mp3.onended=function(){el.style.color = 'black'};        
+    el.mp3.onended=function(){
+      el.style.color = 'black';
+      any_audio_playing = false;
+    };        
   }
   el.style.color = 'red';
+  any_audio_playing = true;
 }
 </script>
 {% endblock %}  
