@@ -6,14 +6,13 @@ def index(request):
     return render(request,'index.html', {'suras': [suras[:38],suras[38:76],suras[76:]]})
 
 def sura(request, sura_number):
-    translation = request.GET.get('trans',1)
+    cur_trans = int(request.GET.get('trans',1))
     sura = get_object_or_404(Sura, number=sura_number)
     ayas = sura.ayas.all()
     trans = get_list_or_404(QuranTranslation)
-    if translation:
-        translations = sura.translations.filter(translation=translation)
-        ayas = zip(ayas, translations)
-    return render(request,'sura.html',  {'sura': sura, 'ayas': ayas,'trans':trans})
+    translations = sura.translations.filter(translation__id=cur_trans)
+    ayas = zip(ayas, translations)
+    return render(request,'sura.html',  {'sura': sura, 'ayas': ayas,'trans':trans,'cur_trans':cur_trans})
 
 
 ###############################
