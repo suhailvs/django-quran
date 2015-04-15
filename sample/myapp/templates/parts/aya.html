@@ -17,7 +17,7 @@
 	a.tooltips:hover span {
 	    display:inline;
 	    position:absolute;
-	    top: -50px;
+	    top: 50px;
 	    background:#ffffff;
 	    border:1px solid #cccccc;
 	    color:#6c6c6c;
@@ -25,19 +25,21 @@
 </style>
 {% endblock %}
 
+{% block nav_bar %}
+<ul id="nav-mobile" class="right">
+    <li><a href="{% url 'quran_sura' words.0.sura.number %}">back</a></li>
+</ul>
+{% endblock %} 
+
 {% block body %}
-<div class="container">	
-	<div class="row">	
-	  <div class="col-md-8 col-md-offset-2">
-	  	{% for word in words %}
-	  	<a class="arab tooltips" href="{{ word.get_absolute_url }}">
-	  		{{ word.token }}
-	  		<span>{{word.translation}}</span>
-	  	</a> 
-	  	{% endfor %}
-	  	<hr>
-	  	<p class="translation">{{ translation.text }}</p>
-	  </div>
-	</div>
+<div class="container">	<br>	
+	{% for word in words %}
+	<a class="arab tooltips" href="{{ word.get_absolute_url }}">
+		{{ word.token }}
+		<span>{{word.translation}}</span>
+	</a> 
+	{% endfor %}
+	<hr>
+	<p class="translation">{{ translation.text }}</p>	  
 </div>
 {% endblock %} 
