@@ -13,15 +13,14 @@ def sura(request, sura_number,aya_range=None):
     trans = get_list_or_404(QuranTranslation)
     translations = sura.translations.filter(translation__id=cur_trans)
     if aya_range:
-        m = re.match('(\d{1,3}).(\d{1,3})',aya_range)
+        m = re.match('(\d{1,3}).(\d{1,3})/',aya_range)
         if m: 
             l,u = m.group(1),m.group(2)
             u = u if u > l else l # cases like 12-1
-            
             ayas = ayas.filter(number__range=[l,u])
-            translations = translations.filter(aya__range=[l,u])
-
+            translations = translations.filter(aya__number__range=[l,u])
     ayas = zip(ayas, translations)
+
     return render(request,'sura.html',  {'sura': sura, 'ayas': ayas,'trans':trans,'cur_trans':cur_trans})
 
 
