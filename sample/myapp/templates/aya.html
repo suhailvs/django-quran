@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block extra_head %}
+<style type="text/css">
+	a.arab{
+		font-size: 40px;
+		text-decoration: none;
+	}
+	a:hover{
+		font-weight: bold;
+		color: orange;
+	}
+	 a.tooltips span {
+	    display:none;
+	    font-size: 15px;
+	    padding:5px;
+	}
+	a.tooltips:hover span {
+	    display:inline;
+	    position:absolute;
+	    top: 50px;
+	    background:#ffffff;
+	    border:1px solid #cccccc;
+	    color:#6c6c6c;
+	}
+</style>
+{% endblock %}
+
+{% block nav_bar %}
+<ul id="nav-mobile" class="right">
+	<li><a href="{% url 'quran_sura' words.0.sura.number %}">Back</a></li>
+</ul>
+{% endblock %} 
+
+{% block body %}
+<div class="container">	<br>	
+	{% for word in words %}
+	<a class="arab tooltips" href="{{ word.get_absolute_url }}">
+		{{ word.token }}
+		<span>{{word.translation}}</span>
+	</a> 
+	{% endfor %}
+	<hr>
+	<p class="translation">{{ translation.text }}</p>
+
+	<div id="word_root"></div>	
+	<div id="root_lemmas"></div>
+
+	<!-- Lemma Modal Structure -->
+	<div id="modal1" class="modal modal-fixed-footer">
+		<div class="modal-content" id="box_lemma">		  
+		</div>
+		<div class="modal-footer">
+		  <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+		</div>
+	</div>
+</div>
+{% endblock %} 
+
+
+{% block javascript %}
+<script type="text/javascript">
+$(document).ready(function() {
+	// word.html
+	$(".arab").click(function(e){
+		e.preventDefault();
+		//console.log($(this).attr('href'));
+		$("#word_root").load($(this).attr('href'));
+		$("#root_lemmas").html('');
+	});
+	// root.html
+	$(document).on('click','#btn_ayaroot',function(e){
+		e.preventDefault();
+		//console.log($(this).attr('href'));
+		$("#root_lemmas").load($(this).attr('href'));
+	});
+
+	// lemma.html in a modal
+	$(document).on('click','.btn_lemma',function(e){
+		e.preventDefault();
+		//console.log($(this).attr('href'));
+		$("#box_lemma").load($(this).attr('href'));
+		$('#modal1').openModal();
+	});	
+});
+</script>
+{% endblock %} 

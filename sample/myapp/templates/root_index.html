@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block body %}
+<div class="container">
+	<h1>Root Index</h1>
+	<ul>
+	    {% for root in roots %}
+	    <li><a href="{{ root.get_absolute_url }}">{{ root }}</a></li>
+	    {% endfor %}
+	</ul>
+</div>
+{% endblock %}
