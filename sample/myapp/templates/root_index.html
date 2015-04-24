@@ -2,10 +2,33 @@
 {% block body %}
 <div class="container">
 	<h1>Root Index</h1>
-	<ul>
+	<div class="collection">
 	    {% for root in roots %}
-	    <li><a href="{{ root.get_absolute_url }}">{{ root }}</a></li>
+	    <a href="{{ root.get_absolute_url }}" class="arab collection-item">{{forloop.counter}}. {{ root }}</a>
 	    {% endfor %}
-	</ul>
+	</div>
+
+	<!-- Lemma Modal Structure -->
+	<div id="modal1" class="modal modal-fixed-footer">
+		<div class="modal-content" id="box_lemma">		  
+		</div>
+		<div class="modal-footer">
+		  <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+		</div>
+	</div>
 </div>
 {% endblock %}
+
+{% block javascript %}
+<script type="text/javascript">
+$(document).ready(function() {
+	// lemma.html in a modal
+	$('.arab').click(function(e){
+		e.preventDefault();
+		//console.log($(this).attr('href'));
+		$("#box_lemma").load($(this).attr('href'));
+		$('#modal1').openModal();
+	});	
+});
+</script>
+{% endblock %} 

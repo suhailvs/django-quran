@@ -3,6 +3,9 @@ from quran.models import *
 import re
 # Create your views here.
 def index(request):
+    if 'q' in request.GET:
+        res = TranslatedAya.objects.filter(text__icontains=request.GET['q'])
+        return render(request,'search.html',{'result':res}) 
     suras = get_list_or_404(Sura)
     return render(request,'index.html', {'suras': [suras[:38],suras[38:76],suras[76:]]})
 

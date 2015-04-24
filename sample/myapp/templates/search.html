@@ -1,0 +1,7 @@
+<ul>{% for trans in result %}
+	<li>	
+		
+		<p>(<small><a href="http://quran.com/{{trans.sura.number}}/{{trans.aya.number}}/">{{trans.sura.number}}:{{trans.aya.number}}</a></small>){{trans.text}}</p>
+	</li>
+	{% endfor %}
+</ul>
