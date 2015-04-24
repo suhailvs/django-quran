@@ -2,14 +2,14 @@
 {% block body %}
 <div class="container">
 	<h1>HolyQuran</h1>
-	<div class="row show-grid">
-	{% for part in suras %}
-	  <div class="col-md-4">
-	  	{% for sura in part %}
+	<div class="row">
+		{% for part in suras %}
+	    <div class="col s12 m4 l4">
+	      {% for sura in part %}
     		<div class="arab"><a href="{% url 'quran_sura' sura.number %}">{{ sura.number }}. {{ sura.name }} <small>{{sura.ename}}</small></a></div>
-    	{% endfor %}
-	  </div>
-	 {% endfor %}
+    	  {% endfor %}
+	    </div>
+	    {% endfor %}
 	</div>
 </div>
 {% endblock %}   

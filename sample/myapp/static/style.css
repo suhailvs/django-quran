@@ -26,3 +26,7 @@
 .show-grid .col-md-4 a:hover{
 	text-decoration: none;
 }
+nav ul a,
+nav .brand-logo {
+  color: #444;
+}

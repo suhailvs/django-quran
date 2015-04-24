@@ -1,38 +1,38 @@
 {% extends "base.html" %}
 {% load extra_filters %}
-
-{% block nav_bar %}
-<form class="navbar-form navbar-left" action=".">
-  <div class="form-group">
-    <select class="form-control" name="trans">
-      {% for translation in trans %}
-      <option value="{{translation.pk}}"{% if translation.pk == cur_trans %} selected{% endif %}>{{translation.name}}</option>
-      {%endfor%}
-    </select>
-  </div>
-  <button type="submit" class="btn btn-default">Go</button>
-</form>
-{{ sura.pk|sura_dropdown }}
-{% endblock %} 
 {% block body %}
-<div class="container">	
-	<div class="row">	
-	  <div class="col-md-8 col-md-offset-2">	  	
-	    <h3>{{sura.number}}. {{sura.name}} - {{sura.ename}}</h3><hr>
-	  	{% for aya,translation in ayas %}
-    		<div class="arab" dir='rtl'>
-          <span style="cursor: url('{{STATIC_URL}}speaker.ico'), default;" onclick="if (!any_audio_playing)playSound(this, '{{STATIC_URL}}audio/{{ sura.number|zfill:3 }}{{ aya.number|zfill:3 }}.mp3');">{{ aya.text }}</span> 
-          <a style="font-size:70%;color:#ccc" href="{{aya.get_absolute_url}}">{{sura.number}}:{{aya.number}}</a>
-        </div>        
-        <span class="text-muted trans{% if cur_trans == 4 or cur_trans == 5 %} mal{% endif %}">{{ translation.text }}</span><hr/>
-    	{% endfor %}
-	  </div>	 
-	</div>
+<div class="container"> 
+  <div class="row">
+    <div class="col s6">
+      <select onChange="document.location.href = document.location.href.split('?')[0]+'?trans='+this.value">
+      {% for translation in trans %}
+        <option value="{{translation.pk}}"{% if translation.pk == cur_trans %} selected{% endif %}>{{translation.name}}</option>
+      {%endfor%}
+      </select>
+    </div>
+    <div class="col s6">
+      {{ sura.pk|sura_dropdown }}
+    </div>
+  </div>
+
+  <blockquote>
+  {{sura.number}}. {{sura.name}} - {{sura.ename}}
+  </blockquote>
+	{% for aya,translation in ayas %}
+		<div class="arab" dir='rtl'>
+      <span style="cursor: url('{{STATIC_URL}}speaker.ico'), default;" onclick="if (!any_audio_playing)playSound(this, '{{STATIC_URL}}audio/{{ sura.number|zfill:3 }}{{ aya.number|zfill:3 }}.mp3');">{{ aya.text }}</span> 
+      <a style="font-size:70%;color:#ccc" href="{{aya.get_absolute_url}}">{{sura.number}}:{{aya.number}}</a>
+    </div>        
+    <span class="text-muted trans{% if cur_trans == 4 or cur_trans == 5 %} mal{% endif %}">{{ translation.text }}</span><hr/>
+	{% endfor %}
 </div>
 {% endblock %}  
 
 {% block javascript %}
 <script type="text/javascript">
+$(document).ready(function() {
+    $('select').material_select();
+  });
 var any_audio_playing = false;
 
 function playSound(el,soundfile){
