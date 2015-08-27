@@ -1,12 +1,14 @@
-{{ root }}
-<hr>
-<ul>
-    {% for lemma in lemmas %}
-    <li>
-        <a class="btn_lemma" href="{{ lemma.get_absolute_url }}">{{ lemma.token }}</a>
-        {% for aya in lemma.ayas.distinct %}
-        <div>{{ aya.sura_id }}:{{ aya.number }}. <span class="aya">{{ aya.text }}</span></div>
-        {% endfor %}
-    </li>
+<!-- get by ajax, used by aya.html and root_index.html-->
+<h4>{{ root }}</h4>
+
+
+{% for lemma in lemmas %}
+<a class="btn_lemma" href="{{ lemma.get_absolute_url }}">{{ lemma.token }}</a>
+    {% for aya in lemma.ayas.distinct %}
+    	<div style="border-bottom:1px dotted #ccc">
+    		<div class="arab" dir='rtl'>{{ aya.text }}</div>
+    		suhail {{ aya.sura_id }}:{{ aya.number }}
+    	</div>
     {% endfor %}
-</ul>
+
+{% endfor %}

@@ -9,6 +9,9 @@
 .arab {
     font-size:26px;
     font-family:'Scheherazade', serif;
+    padding-bottom: 20px;
+    line-height: 30px;
+    letter-spacing: 2px;
 } 
 .mal {
     font-family:'Meera', serif;
@@ -29,4 +32,8 @@
 nav ul a,
 nav .brand-logo {
   color: #444;
+}
+
+.btn_lemma{
+  font-size: 24px;
 }

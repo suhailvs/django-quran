@@ -4,3 +4,4 @@ dist
 django_quran.egg-info
 *.sqlite3
 sample/myapp/static/audio/*.mp3
+sample/myapp/static/audio/audio.zip

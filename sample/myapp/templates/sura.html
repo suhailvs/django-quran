@@ -15,15 +15,17 @@
     </div>
   </div>
 
-  <blockquote>
+  <h3><blockquote>
   {{sura.number}}. {{sura.name}} - {{sura.ename}}
-  </blockquote>
+  </blockquote></h3>
 	{% for aya,translation in ayas %}
+  <div style="border:1px dashed #ccc; padding: 20px;">
 		<div class="arab" dir='rtl'>
       <span style="cursor: url('{{STATIC_URL}}speaker.ico'), default;" onclick="if (!any_audio_playing)playSound(this, '{{STATIC_URL}}audio/{{ sura.number|zfill:3 }}{{ aya.number|zfill:3 }}.mp3');">{{ aya.text }}</span> 
-      <a style="font-size:70%;color:#ccc" href="{{aya.get_absolute_url}}">{{sura.number}}:{{aya.number}}</a>
+      <a style="color:#ccc" href="{{aya.get_absolute_url}}">({{aya.number}})</a>
     </div>        
-    <span class="text-muted trans{% if cur_trans == 4 or cur_trans == 5 %} mal{% endif %}">{{ translation.text }}</span><hr/>
+    <span style="font-size:14px" class="trans{% if cur_trans == 4 or cur_trans == 5 %} mal{% endif %}">{{ translation.text }}</span>
+  </div>
 	{% endfor %}
 </div>
 {% endblock %}  

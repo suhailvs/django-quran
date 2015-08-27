@@ -1,0 +1,53 @@
+Tanakh
+======
+
+Torah(the teaching)
+-------------------
+genesis
+exodus
+leviticus
+numbers
+deuteronomy
+
+Neviim(the prophets)
+--------------------
+joshua
+judges
+1 samuel
+2 samuel
+1 kings
+2 kings
+isaiah
+jeremiah
+ezekiel
+hosea
+joel
+amos
+obadiah
+jonah
+micah
+nahum
+habakkuk
+zephaniah
+haggai
+zechariah
+malachi
+
+Kethuvim(the writings)
+----------------------
+
+psalams
+proverbs
+job
+the song of songs
+ruth
+lamentations
+ecclesiastes
+esther
+daniel
+ezra
+nehemiah
+1 chronicles
+2 chronicles
+
+
