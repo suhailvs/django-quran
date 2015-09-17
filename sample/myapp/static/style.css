@@ -1,0 +1,27 @@
+@font-face {
+  font-family: 'Scheherazade';
+  src: url('Scheherazade-R.woff');
+}	
+@font-face {
+  font-family: 'Meera';
+  src: url('Meera.woff');
+}	
+body { font:12px/1.5 Verdana,sans-serif; background:#092e20; }
+a {text-decoration: none;}
+a:link, a:visited { color:#ffc757; }
+a:hover { color:#ffe761; }  
+#sidebar { 
+  padding: 20px; 
+  color:#fff;
+     
+}
+.arab {
+    font-size:26px;
+    font-family:'Scheherazade', serif;
+    padding-bottom: 20px;
+    line-height: 30px;
+    letter-spacing: 2px;
+} 
+.mal {  font-family:'Meera', serif;} 
+.trans{ font-size: 20px}
+

@@ -1,15 +1,9 @@
 {% extends "base.html" %}
 {% block extra_head %}
-<style type="text/css">
-	a.arab{
-		font-size: 40px;
-		text-decoration: none;
-	}
-	a:hover{
-		font-weight: bold;
-		color: orange;
-	}
-	 a.tooltips span {
+<style type="text/css">	
+	a.arab:hover{ font-weight: bold;  color: orange;  }   
+
+	a.tooltips span {
 	    display:none;
 	    font-size: 15px;
 	    padding:5px;
@@ -25,34 +19,16 @@
 </style>
 {% endblock %}
 
-{% block nav_bar %}
-<ul id="nav-mobile" class="right">
-	<li><a href="{% url 'quran_sura' words.0.sura.number %}">Back</a></li>
-</ul>
-{% endblock %} 
-
 {% block body %}
-<div class="container">	<br>	
+	<a href="{% url 'quran_sura' words.0.sura.number %}">Back</a><br><br>
 	{% for word in words %}
 	<a class="arab tooltips" href="{{ word.get_absolute_url }}">
-		{{ word.token }}
-		<span>{{word.translation}}</span>
+		{{ word.token }}<span>{{word.translation}}</span>
 	</a> 
 	{% endfor %}
 	<br>
 	<p class="translation">{{ translation.text }}</p>
-
-	<div id="word_root" style="border:1px solid #ccc;padding:10px"></div>	
-	
-	<!-- Lemma Modal Structure -->
-	<div id="modal1" class="modal modal-fixed-footer">
-		<div class="modal-content" id="box_lemma">		  
-		</div>
-		<div class="modal-footer">
-		  <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
-		</div>
-	</div>
-</div>
+	<div id="word_root"></div>
 {% endblock %} 
 
 
@@ -61,20 +37,10 @@
 $(document).ready(function() {
 	// word.html
 	$(".arab").click(function(e){
+		//$(this).style="color:green";
 		e.preventDefault();
-		//console.log($(this).attr('href'));
 		$("#word_root").load($(this).attr('href'));
-		//$("#root_lemmas").html('');
 	});
-	
-
-	// lemma.html in a modal
-	$(document).on('click','.btn_lemma',function(e){
-		e.preventDefault();
-		//console.log($(this).attr('href'));
-		$("#box_lemma").load($(this).attr('href'));
-		$('#modal1').openModal();
-	});	
 });
 </script>
 {% endblock %} 

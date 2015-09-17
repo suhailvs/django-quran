@@ -1,7 +1,11 @@
+{% extends "base.html" %}
+
+{% block body %}
+<p> Showing result for query <strong>"{{q}}"</strong> on translator <strong>{{result.0.translation.translator}}</strong>.</p>
 <ul>{% for trans in result %}
-	<li>	
-		
+	<li>			
 		<p>(<small><a href="http://quran.com/{{trans.sura.number}}/{{trans.aya.number}}/">{{trans.sura.number}}:{{trans.aya.number}}</a></small>){{trans.text}}</p>
 	</li>
 	{% endfor %}
 </ul>
+{% endblock %} 

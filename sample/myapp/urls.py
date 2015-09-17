@@ -10,9 +10,4 @@ urlpatterns = patterns('myapp.views',
 
     # sura
     url(r'^(?P<sura_number>\d+)/(?P<aya_range>.+/)?$', 'sura', name='quran_sura'),
-
-    # Parts :
-    url(r'^lemma/(?P<lemma_id>\d+)/$', 'lemma', name='quran_lemma'),
-    url(r'^root/(?P<root_id>\d+)/$', 'root', name='quran_root'),
-    url(r'^root/$', 'root_index', name='quran_root_list'),
 )

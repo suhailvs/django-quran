@@ -1,42 +1,21 @@
 {% extends "base.html" %}
 {% load extra_filters %}
 {% block body %}
-<div class="container"> 
-  <div class="row">
-    <div class="col s6">
-      <select onChange="document.location.href = document.location.href.split('?')[0]+'?trans='+this.value">
-      {% for translation in trans %}
-        <option value="{{translation.pk}}"{% if translation.pk == cur_trans %} selected{% endif %}>{{translation.name}}</option>
-      {%endfor%}
-      </select>
-    </div>
-    <div class="col s6">
-      {{ sura.pk|sura_dropdown }}
-    </div>
-  </div>
-
-  <h3><blockquote>
-  {{sura.number}}. {{sura.name}} - {{sura.ename}}
-  </blockquote></h3>
-	{% for aya,translation in ayas %}
-  <div style="border:1px dashed #ccc; padding: 20px;">
-		<div class="arab" dir='rtl'>
-      <span style="cursor: url('{{STATIC_URL}}speaker.ico'), default;" onclick="if (!any_audio_playing)playSound(this, '{{STATIC_URL}}audio/{{ sura.number|zfill:3 }}{{ aya.number|zfill:3 }}.mp3');">{{ aya.text }}</span> 
-      <a style="color:#ccc" href="{{aya.get_absolute_url}}">({{aya.number}})</a>
-    </div>        
-    <span style="font-size:14px" class="trans{% if cur_trans == 4 or cur_trans == 5 %} mal{% endif %}">{{ translation.text }}</span>
-  </div>
-	{% endfor %}
+<h1><blockquote>{{sura.number}}. {{sura.name}} - {{sura.ename}}</blockquote></h1>
+{% for aya,translation in ayas %}
+<div style="border:1px dashed #ccc; padding: 20px;">
+	<div class="arab" dir='rtl'>
+    <span style="cursor: url('{{STATIC_URL}}speaker.ico'), default;" onclick="if (!any_audio_playing)playSound(this, '{{STATIC_URL}}audio/{{ sura.number|zfill:3 }}{{ aya.number|zfill:3 }}.mp3');">{{ aya.text }}</span> 
+    <a style="font-size:80%;color:#ccc" href="{{aya.get_absolute_url}}">({{aya.number}})</a>
+  </div>        
+  <span style="font-size:14px" class="trans{% if cur_trans == 4 or cur_trans == 5 %} mal{% endif %}">{{ translation.text }}</span>
 </div>
+{% endfor %}
 {% endblock %}  
 
 {% block javascript %}
 <script type="text/javascript">
-$(document).ready(function() {
-    $('select').material_select();
-  });
 var any_audio_playing = false;
-
 function playSound(el,soundfile){
   if (el.mp3) {
     if(el.mp3.paused) {
