@@ -1,15 +1,19 @@
 {% extends "base.html" %}
 {% block body %}
-<div class="container">
-	<h1>HolyQuran</h1>
-	<div class="row">
-		{% for part in suras %}
-	    <div class="col s12 m4 l4">
+<h3>Suras</h3>
+<form action="/" method="get">
+    <input name="q">
+    <input type="submit" value="Search">
+</form>
+
+<table style="width: 100%" class="indextable genindextable"><tbody><tr>
+	{% for part in suras %}
+	    <td style="width: 33%" valign="top">
 	      {% for sura in part %}
     		<div class="arab"><a href="{% url 'quran_sura' sura.number %}">{{ sura.number }}. {{ sura.name }} <small>{{sura.ename}}</small></a></div>
     	  {% endfor %}
-	    </div>
-	    {% endfor %}
-	</div>
-</div>
+	    </td>
+	{% endfor %}    
+</tr></tbody></table>
+
 {% endblock %}   
