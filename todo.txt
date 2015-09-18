@@ -1,5 +1,3 @@
-+ add a field lang in model QuranTranslation and update translator_data.txt, __init__.py (import_translations)
-+ update the translation option_box in base.html
 + add more translations 
 
 

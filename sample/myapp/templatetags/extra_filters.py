@@ -24,15 +24,13 @@ def suras_list(value=1):
 	c = template.Context({'suras': suras,'cur_sura':value})
 	return t.render(c)
 
-
-
 @register.filter
 def trans_list(value):
 	trans = QuranTranslation.objects.all()
 	opt_trans = """		
 	<select onChange="document.location.href = document.location.href.split('?')[0]+'?trans='+this.value">
       {% for translation in trans %}
-        <option value="{{translation.pk}}"{% if translation.pk == cur_trans %} selected{% endif %}>{{translation.name}}</option>
+        <option value="{{translation.pk}}"{% if translation.pk == cur_trans %} selected{% endif %}>{{translation.name}} ({{translation.translator}})</option>
       {%endfor%}
       </select>
 	"""
