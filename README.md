@@ -7,18 +7,9 @@
 
 ie:
 
-    $ cd sample
     $ ./manage.py migrate
     $ ./manage.py quran_loaddata
     $ ./manage.py runserver
-
-
-## On a custom project
-
-1. Download and install `django-quran`
-2. Add `'quran'` to `INSTALLED_APPS` in `settings.py`
-3. Run `./manage.py migrate` and `./manage.py quran_loaddata`
-4. Run the server `./manage.py runserver`
 
 
 # Resources

@@ -68,7 +68,7 @@ u" ": " ",
 }
 
 _buckwalter_to_unicode = {}
-for (u, bw) in _unicode_to_buckwalter.iteritems():
+for (u, bw) in _unicode_to_buckwalter.items():
     _buckwalter_to_unicode[bw] = u;
 
 
