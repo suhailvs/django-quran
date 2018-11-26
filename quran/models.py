@@ -149,5 +149,5 @@ class Word(models.Model):
     def __str__(self):
         return unicode_to_buckwalter(self.token)
 
-    def __unicode__(self):
-        return self.token
+    # def __unicode__(self):
+    #     return self.token

@@ -28,22 +28,22 @@ def aya(request, sura_number, aya_number, translation=1):
 def word(request, sura_number, aya_number, word_number):
     aya = get_object_or_404(Aya, sura=sura_number, number=aya_number)
     word = get_object_or_404(Word, aya=aya, number=word_number)
-    root = word.root
-    return render(request,'parts/word.html', {'word': word, 'aya': aya, 'root': root})
+    # root = word.root
+    return render(request,'parts/word.html', {'word': word, 'aya': aya, 'root': word})
 
-def lemma(request, lemma_id):
-    lemma = get_object_or_404(Lemma, pk=lemma_id)
-    root = lemma.root
-    words = lemma.word_set.all()
-    ayas = lemma.ayas.distinct()
-    return render(request,'parts/lemma.html', {'lemma': lemma, 'root': root, 'words': words, 'ayas': ayas})
+# def lemma(request, lemma_id):
+#     lemma = get_object_or_404(Lemma, pk=lemma_id)
+#     root = lemma.root
+#     words = lemma.word_set.all()
+#     ayas = lemma.ayas.distinct()
+#     return render(request,'parts/lemma.html', {'lemma': lemma, 'root': root, 'words': words, 'ayas': ayas})
 
-def root(request, root_id):
-    root = get_object_or_404(Root, pk=root_id)
-    lemmas = root.lemmas.all()
-    ayas = root.ayas.distinct()
-    return render(request,'parts/root.html', {'root': root, 'lemmas': lemmas, 'ayas': ayas})
+# def root(request, root_id):
+#     root = get_object_or_404(Root, pk=root_id)
+#     lemmas = root.lemmas.all()
+#     ayas = root.ayas.distinct()
+#     return render(request,'parts/root.html', {'root': root, 'lemmas': lemmas, 'ayas': ayas})
 
-def root_index(request):
-    roots = Root.objects.all().order_by('letters')
-    return render(request,'parts/root_index.html', {'roots': roots})
+# def root_index(request):
+#     roots = Root.objects.all().order_by('letters')
+#     return render(request,'parts/root_index.html', {'roots': roots})
