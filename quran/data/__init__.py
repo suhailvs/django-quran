@@ -208,7 +208,7 @@ class DataIntegrityTestCase(unittest.TestCase):
         sura = Sura.objects.get(number=sura_number)
         aya = sura.ayas.get(number=aya_number)
         word = aya.words.get(number=word_number)
-        self.assertEquals(word.token, buckwalter_to_unicode(expected_word))
+        self.assertEqual(word.token, buckwalter_to_unicode(expected_word))
 
     def test_first_ayas(self):
         """
@@ -236,4 +236,4 @@ class DataIntegrityTestCase(unittest.TestCase):
         aya = sura.ayas.get(number=aya_number)
         translation = QuranTranslation.objects.get(name='Yusuf Ali')
         t = aya.translations.get(translation=translation)
-        self.assertEquals(t.text, 'And there is none like unto Him.')
+        self.assertEqual(t.text, 'And there is none like unto Him.')

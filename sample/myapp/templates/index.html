@@ -6,7 +6,7 @@
 	{% for part in suras %}
 	  <div class="col-md-4">
 	  	{% for sura in part %}
-    		<div class="arab"><a href="{% url 'quran_sura' sura.number %}">{{ sura.number }}. {{ sura.name }} <small>{{sura.ename}}</small></a></div>
+    		<div class="arab"><a href="{% url 'myapp:quran_sura' sura.number %}">{{ sura.number }}. {{ sura.name }} <small>{{sura.ename}}</small></a></div>
     	{% endfor %}
 	  </div>
 	 {% endfor %}

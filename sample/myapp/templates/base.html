@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block head_title %}{% endblock %} HolyQuran</title>
-    {% load staticfiles %}
+    {% load static %} 
     <link href="{% static "bootstrap.css" %}" rel="stylesheet">
     <link href="{% static "style.css" %}" rel="stylesheet">
     <!--[if lt IE 9]>
@@ -19,7 +19,7 @@
     <nav class="navbar navbar-default">
       <div class="container-fluid">
         <div class="navbar-header">      
-          <a class="navbar-brand" href="{% url 'quran_index' %}">Home</a>
+          <a class="navbar-brand" href="{% url 'myapp:quran_index' %}">Home</a>
         </div>
         <div class="collapse navbar-collapse">
           {% block nav_bar %}{% endblock %} 

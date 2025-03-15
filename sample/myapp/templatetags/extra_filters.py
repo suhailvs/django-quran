@@ -14,7 +14,7 @@ def sura_dropdown(value):
 		  <div class="form-group">
 		    <select class="form-control" name="jumpsura" onChange="document.location.href=this.value">
 		      {% for sura in suras %}
-		      <option value="{% url 'quran_sura' sura.pk %}"{% if sura.pk == cur_sura %} selected{% endif %}>{{sura.pk}}. {{sura.tname}}</option>
+		      <option value="{% url 'myapp:quran_sura' sura.pk %}"{% if sura.pk == cur_sura %} selected{% endif %}>{{sura.pk}}. {{sura.tname}}</option>
 		      {%endfor%}
 		    </select>
 		  </div>		  

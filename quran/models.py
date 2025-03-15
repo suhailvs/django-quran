@@ -3,6 +3,7 @@ from django.utils.safestring import mark_safe
 
 from quran.buckwalter import *
 
+from django.urls import reverse
 
 class Sura(models.Model):
     """Sura (chapter) of the Quran"""
@@ -24,9 +25,9 @@ class Sura(models.Model):
     class Meta:
         ordering = ['number']
 
-    @models.permalink
+    # @models.permalink
     def get_absolute_url(self):
-        return ('quran_sura', [str(self.number)])
+        return reverse('myapp:quran_sura', args=(str(self.number),))
 
     def __str__(self):
         return self.tname
@@ -39,7 +40,7 @@ class Aya(models.Model):
     """Aya (verse) of the Quran"""
 
     number = models.IntegerField(verbose_name='Aya Number')
-    sura = models.ForeignKey(Sura, related_name='ayas')
+    sura = models.ForeignKey(Sura, related_name='ayas', on_delete=models.CASCADE)
     text = models.TextField(blank=False)
 
     class Meta:
@@ -49,9 +50,11 @@ class Aya(models.Model):
     def end_marker(self):
         return mark_safe('&#64831;&#1633;&#64830;')
 
-    @models.permalink
+    # @models.permalink
     def get_absolute_url(self):
-        return ('quran_aya', [str(self.sura_id), str(self.number)])
+        # reverse('myapp:quran_sura', args=(str(self.number),))
+
+        return reverse('myapp:quran_aya', args=[str(self.sura_id), str(self.number)])
 
     def __str__(self):
         return unicode_to_buckwalter(self.text)
@@ -73,16 +76,16 @@ class QuranTranslation(models.Model):
 
 class TranslatedAya(models.Model):
     """Translation of an aya"""
-    sura = models.ForeignKey(Sura, related_name='translations')
-    aya = models.ForeignKey(Aya, related_name='translations')
-    translation = models.ForeignKey(QuranTranslation)
+    sura = models.ForeignKey(Sura, related_name='translations', on_delete=models.CASCADE)
+    aya = models.ForeignKey(Aya, related_name='translations', on_delete=models.CASCADE)
+    translation = models.ForeignKey(QuranTranslation, on_delete=models.CASCADE)
     text = models.TextField(blank=False)
 
     class Meta:
         unique_together = (('aya', 'translation'))
         ordering = ['aya']
 
-    def __unicode__(self):
+    def __str__(self):
         return self.text
 
 
@@ -92,9 +95,10 @@ class Root(models.Model):
     letters = models.CharField(max_length=10, unique=True) # to my knowledge, there is no root with more than 7 letters
     ayas = models.ManyToManyField(Aya, through='Word')
 
-    @models.permalink
+    # @models.permalink
     def get_absolute_url(self):
-        return ('quran_root', [str(self.id)])
+        # reverse('myapp:quran_sura', args=(str(self.number),))
+        return reverse('myapp:quran_root', args=[str(self.id)])
 
     def __str__(self):
         return unicode_to_buckwalter(self.letters)
@@ -106,15 +110,16 @@ class Root(models.Model):
 class Lemma(models.Model):
     """Distinct Arabic word (lemma) in the Quran"""
     token = models.CharField(max_length=50, unique=True)
-    root = models.ForeignKey(Root, null=True, related_name='lemmas')
+    root = models.ForeignKey(Root, null=True, related_name='lemmas', on_delete=models.CASCADE)
     ayas = models.ManyToManyField(Aya, through='Word')
 
     class Meta:
         ordering = ['token']
 
-    @models.permalink
+    # @models.permalink
     def get_absolute_url(self):
-        return ('quran_lemma', [str(self.id)])
+        # reverse('myapp:quran_sura', args=(str(self.number),))
+        return reverse('myapp:quran_lemma', args=[str(self.id)])
 
     def __str__(self):
         return unicode_to_buckwalter(self.token)
@@ -125,12 +130,12 @@ class Lemma(models.Model):
 class Word(models.Model):
     """Arabic word in the Quran"""
 
-    sura = models.ForeignKey(Sura, related_name='words')
-    aya = models.ForeignKey(Aya, related_name='words')
+    sura = models.ForeignKey(Sura, related_name='words', on_delete=models.CASCADE)
+    aya = models.ForeignKey(Aya, related_name='words', on_delete=models.CASCADE)
     number = models.IntegerField()
     token = models.CharField(max_length=50)
-    root = models.ForeignKey(Root, null=True, related_name='words')
-    lemma = models.ForeignKey(Lemma)
+    root = models.ForeignKey(Root, null=True, related_name='words', on_delete=models.CASCADE)
+    lemma = models.ForeignKey(Lemma, on_delete=models.CASCADE)
     ename = models.CharField(max_length=50, blank=True)
     translation = models.CharField(max_length=200,blank=True)
 
@@ -138,9 +143,10 @@ class Word(models.Model):
         unique_together = (('aya', 'number'))
         ordering = ['number']
 
-    @models.permalink
+    # @models.permalink
     def get_absolute_url(self):
-        return ('quran_word', [str(self.sura_id), str(self.aya.number), str(self.number)])
+        # reverse('myapp:quran_sura', args=(str(self.number),))
+        return reverse('myapp:quran_word', args=[str(self.sura_id), str(self.aya.number), str(self.number)])
 
     def __str__(self):
         return unicode_to_buckwalter(self.token)
