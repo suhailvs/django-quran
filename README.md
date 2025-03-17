@@ -7,11 +7,16 @@
 
 ie:
 
-    $ cd sample
-    $ ./manage.py migrate
-    $ ./manage.py quran_loaddata
-    $ ./manage.py runserver
-
+```shell
+cd sample
+python3 -m venv env
+source env/bin/activate
+pip install django
+pip install -e ../
+./manage.py migrate
+./manage.py quran_loaddata
+./manage.py runserver
+```
 
 ## On a custom project
 
