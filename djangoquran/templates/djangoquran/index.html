@@ -1,0 +1,12 @@
+{% extends "djangoquran/base.html" %}
+{% block body %}
+<div class="container">
+	<h1>HolyQuran</h1>
+	
+	<ul>
+		{% for surah in surahs %}
+		<li><a href="{% url 'djangoquran:quran_surah' surah %}">Surah:<small>{{surah}}</small></a></li>
+		{% endfor %}
+	</ul>
+</div>
+{% endblock %}   

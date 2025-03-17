@@ -1,0 +1,48 @@
+{% extends "djangoquran/base.html" %}
+{% load extra_filters %}
+{% load static %}
+{% block body %}
+<div class="container">	
+	<div class="row">	
+	  <div class="col-md-8 col-md-offset-2">	  	
+	    <h3>Surah: {{surah}}</h3><hr>
+	  	{% for ayah in ayahs %}
+    		<div class="arab" dir='rtl'>
+          <span style="cursor: url('{% static 'speaker.ico' %}'), default;" onclick="if (!any_audio_playing)playSound(this, '{% static 'audio' %}/{{ ayah.0.surah|zfill:3 }}{{ ayah.0.ayah|zfill:3 }}.mp3');">play</span>
+          {% for word in ayah %}          
+          <a href="{% url 'djangoquran:quran_word' word.surah word.ayah word.position %}">{{ word.token|buckwalter_decode }}</a>
+          {% endfor %}
+        </div>        
+        {% for word in ayah %}
+        <span class="text-muted">{{ word.meaning }}</span>
+        {% endfor %}
+        <hr/>
+    	{% endfor %}
+	  </div>	 
+	</div>
+</div>
+{% endblock %}  
+
+{% block javascript %}
+<script type="text/javascript">
+var any_audio_playing = false;
+
+function playSound(el,soundfile){
+  if (el.mp3) {
+    if(el.mp3.paused) {
+      el.mp3.play();
+      any_audio_playing = true;
+    }
+  } else {
+    el.mp3 = new Audio(soundfile);
+    el.mp3.play();        
+    el.mp3.onended=function(){
+      el.style.color = 'black';
+      any_audio_playing = false;
+    };        
+  }
+  el.style.color = 'red';
+  any_audio_playing = true;
+}
+</script>
+{% endblock %}  

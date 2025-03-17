@@ -1,0 +1,3 @@
+recursive-include djangoquran/static *
+recursive-include djangoquran/templates *
+recursive-include djangoquran/datas *

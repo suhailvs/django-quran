@@ -1,0 +1,14 @@
+{% extends "djangoquran/base.html" %}
+{% block body %}
+<div class="container">	
+	<div class="row">	
+	  <div class="col-md-8 col-md-offset-2">
+	  	<div class="arab">{{ word.token }}</div> 
+	  	<h4><span class="label label-default">{{word.meaning}}</span></h4>
+		<div>({{ word.surah }}:{{ word.ayah }}:{{word.position}})</div>
+		<p>Root: {{word.lemma.root.token}}</p>
+		<p>Lemma: {{word.lemma.token}}</p>
+	  </div>
+	</div>
+</div>
+{% endblock %} 
