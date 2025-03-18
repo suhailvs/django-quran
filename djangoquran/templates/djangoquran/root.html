@@ -1,0 +1,11 @@
+{% extends "djangoquran/base.html" %}
+{% load extra_filters %}
+{% block body %}
+    <!--https://www.openislam.org/root_words/29947--> 
+    <table class="table table-bordered">
+        <tr><th>Similar Words</th><th>Translation</th><th>Position</th></tr>
+        {% for w in words %}
+        <tr><td>{{w.token|buckwalter_decode}}</td><td>{{w.meaning}}</td><td>({{w.surah}}:{{w.ayah}}:{{w.position}})</td></tr>
+        {% endfor %}
+    </table>
+{% endblock %} 

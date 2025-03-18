@@ -1,41 +1,33 @@
-from django.shortcuts import render, get_object_or_404,get_list_or_404
-from .models import Root,Lemma,Word
-from django.db.models import Max
-
-def index(request):
-    surahs = [i for i in range(1,115)]
-    return render(request,'djangoquran/index.html', {'surahs': surahs})
-
-def surah(request, surah_number):
-    qs = Word.objects.filter(surah=surah_number)
-    total_ayahs = qs.aggregate(m=Max('ayah'))['m']
-    ayahs = []
-    for i in range(1,total_ayahs+1):
-        ayahs.append(qs.filter(ayah=i).order_by('position'))
-    
-    return render(request,'djangoquran/surah.html',  {'ayahs': ayahs, 'surah':surah_number})
+from django.shortcuts import render
+from .models import Root, Word
+from django.db.models import Max, Case, When, Value, CharField
+from djangoquran.buckwalter import LETTERS_ONLY
 
 
-def word(request, surah_number, ayah_number, word_number):
-    # aya = get_object_or_404(Aya, sura=sura_number, number=aya_number)
-    word = get_object_or_404(Word, surah=surah_number,ayah=ayah_number, position=word_number)
-    # root = word.root
-    return render(request,'djangoquran/word.html', {'word': word}) #, 'root': root})
-"""
-def lemma(request, lemma_id):
-    lemma = get_object_or_404(Lemma, pk=lemma_id)
-    root = lemma.root
-    words = lemma.word_set.all()
-    ayas = lemma.ayas.distinct()
-    return render(request,'parts/lemma.html', {'lemma': lemma, 'root': root, 'words': words, 'ayas': ayas})
+def surah(request):
+    if request.method == "POST":
+        qs = Word.objects.filter(surah=request.POST.get("surah_number"))
+        total_ayahs = qs.aggregate(m=Max("ayah"))["m"]
+        ayahs = [
+            qs.filter(ayah=i).order_by("position") for i in range(1, total_ayahs + 1)
+        ]
+        return render(request, "djangoquran/surah.html", {"ayahs": ayahs})
+    return render(request, "djangoquran/index.html", {"surahs": list(range(1, 115))})
+
+
+def word(request, word_id):
+    word = Word.objects.get(id=word_id)
+    return render(request, "djangoquran/word.html", {"word": word})
+
+
+def root_list(request):
+    conditions = [When(token__startswith=l, then=Value(l)) for l in LETTERS_ONLY]
+    letter_group = Case(*conditions, default=Value("Other"), output_field=CharField())
+    roots = Root.objects.values("token", "id").annotate(group=letter_group)
+    root_group = {l: roots.filter(group=l) for l in LETTERS_ONLY}
+    return render(request, "djangoquran/root_list.html", {"roots": root_group})
+
 
 def root(request, root_id):
-    root = get_object_or_404(Root, pk=root_id)
-    lemmas = root.lemmas.all()
-    ayas = root.ayas.distinct()
-    return render(request,'parts/root.html', {'root': root, 'lemmas': lemmas, 'ayas': ayas})
-
-def root_index(request):
-    roots = Root.objects.all().order_by('id')
-    return render(request,'parts/root_index.html', {'roots': roots})
-"""
+    words = Word.objects.filter(lemma__root_id=root_id)
+    return render(request, "djangoquran/root.html", {"words": words})

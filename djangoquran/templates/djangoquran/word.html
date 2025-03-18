@@ -1,14 +1,15 @@
 {% extends "djangoquran/base.html" %}
+{% load extra_filters %}
 {% block body %}
-<div class="container">	
-	<div class="row">	
-	  <div class="col-md-8 col-md-offset-2">
-	  	<div class="arab">{{ word.token }}</div> 
-	  	<h4><span class="label label-default">{{word.meaning}}</span></h4>
-		<div>({{ word.surah }}:{{ word.ayah }}:{{word.position}})</div>
-		<p>Root: {{word.lemma.root.token}}</p>
-		<p>Lemma: {{word.lemma.token}}</p>
-	  </div>
-	</div>
-</div>
+<div class="well arab" style="font-size: 100px;">
+	{{ word.token|buckwalter_decode }} 
+	<small><span class="label label-default">{{word.meaning}}</span></small>
+</div> 
+
+<table class="table table-bordered">
+	<tr><th>Similar Words</th><th>Translation</th><th>Position</th></tr>
+	{% for w in word.lemma.word_set.all %}
+	<tr><td>{{w.token|buckwalter_decode}}</td><td>{{w.meaning}}</td><td>({{w.surah}}:{{w.ayah}}:{{w.position}})</td></tr>
+	{% endfor %}
+</table>
 {% endblock %} 

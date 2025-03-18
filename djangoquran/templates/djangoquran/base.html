@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block head_title %}{% endblock %} HolyQuran</title>
     {% load static %} 
+    {% load extra_filters %}
     <link href="{% static "bootstrap.css" %}" rel="stylesheet">
     <link href="{% static "style.css" %}" rel="stylesheet">
     <!--[if lt IE 9]>
@@ -16,19 +17,37 @@
 </head>
 
 <body>    
-    <nav class="navbar navbar-default">
-      <div class="container-fluid">
-        <div class="navbar-header">      
-          <a class="navbar-brand" href="{% url 'djangoquran:quran_index' %}">Home</a>
-        </div>
-        <div class="collapse navbar-collapse">
-          {% block nav_bar %}{% endblock %} 
-        </div>
+  <nav class="navbar navbar-default">
+    <div class="container">
+      <div class="navbar-header">      
+        <a class="navbar-brand" href="{% url 'djangoquran:quran_root_list' %}">Roots</a>
       </div>
-    </nav>
-    {% block body %}
-    {% endblock %}   
-    {% block javascript %}
-    {% endblock %}    
+      <div class="collapse navbar-collapse">
+        <form class="navbar-form navbar-left" action="{% url 'djangoquran:quran_surah' %}" method="POST">
+          {% csrf_token %}
+          <div class="form-group">
+            <select class="form-control" name="surah_number">
+              {% for i in 115|times %}
+              <option value="{{ forloop.counter }}"{% if forloop.counter|stringformat:"s" == request.POST.surah_number %} selected{% endif %}>Surah: {{ forloop.counter }}</option>
+              {% endfor %}                
+            </select>
+          </div>
+          <button type="submit" class="btn btn-default">Go</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">	
+    <div class="row">	
+      <div class="col-md-8 col-md-offset-2">
+        {% block body %}
+        {% endblock %}           
+      </div>	 
+    </div>
+  </div> 
+  {% block javascript %}
+  {% endblock %}   
 </body>
 </html>
+

@@ -12,3 +12,7 @@ def zfill(value, arg):
 @register.filter
 def buckwalter_decode(value):
     return decode(value)
+
+@register.filter
+def times(value):
+    return range(value)
