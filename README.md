@@ -4,7 +4,16 @@
 Quran app for Django.
 
 ## How to Package  
+
 Refer to the Django documentation: [Reusable Apps Guide](https://docs.djangoproject.com/en/5.1/intro/reusable-apps/)
+
+```bash
+pip install build
+pip install twine
+rm -rf dist/
+python -m build
+twine upload dist/*
+```
 
 ## Quick Start
 

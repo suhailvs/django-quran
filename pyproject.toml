@@ -4,12 +4,12 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "djangoquran"
-version = "0.1"
+version = "0.2"
 dependencies = [
     "django>=4.2",  
 ]
 description = "A Django app to manupulate quran."
-readme = "README.rst"
+readme = "README.md"
 requires-python = ">= 3.10"
 authors = [
     {name = "suhail vs", email = "suhailvs@gmail.com"},
@@ -19,7 +19,6 @@ classifiers = [
     "Framework :: Django",
     "Framework :: Django :: 5.1",  # Replace "X.Y" as appropriate
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: BSD License",
     "Operating System :: OS Independent",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
@@ -33,4 +32,4 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/suhailvs/djangoquran/"
+Homepage = "https://github.com/suhailvs/django-quran/"

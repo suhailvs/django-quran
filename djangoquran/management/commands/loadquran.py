@@ -15,15 +15,17 @@ def calculate_line_number(surah, ayah):
         return sum(AYAHS_PER_SURAH[: surah - 1]) + ayah
     return None
 
+def read_csv(fname):
+    with importlib.resources.files("djangoquran.datas").joinpath(fname).open("r") as f:
+        return list(csv.reader(f))
+# def read_csv_at_index(index):
+#     import csv
 
-def read_csv_at_index(index):
-    import csv
-
-    with open("djangoquran/datas/quran.csv") as file:
-        reader = list(csv.reader(file))
-        if 0 <= index < len(reader):
-            return reader[index]
-        return None
+#     with open("djangoquran/datas/quran.csv") as file:
+#         reader = list(csv.reader(file))
+#         if 0 <= index < len(reader):
+#             return reader[index]
+#         return None
 
 
 class Command(BaseCommand):
@@ -37,11 +39,11 @@ class Command(BaseCommand):
             self.stdout.write('lemmas or roots table is not empty')
         else:
             objs = []
-            with importlib.resources.open_text("djangoquran.datas","lemmas.csv") as f:
-                lemmas = list(csv.reader(f))                
-                for lemma in lemmas:
-                    root,_= Root.objects.get_or_create(token=lemma[1])
-                    objs.append(Lemma(token=lemma[0],root=root))
+            # with importlib.resources.open_text("djangoquran.datas",) as f:
+            lemmas = read_csv("lemmas.csv")            
+            for lemma in lemmas:
+                root,_= Root.objects.get_or_create(token=lemma[1])
+                objs.append(Lemma(token=lemma[0],root=root))
             self.stdout.write('Running bulk create...')
             Lemma.objects.bulk_create(objs)
             self.stdout.write('Lemmas and roots completed')
@@ -53,17 +55,17 @@ class Command(BaseCommand):
             self.stdout.write('Word table is not empty')
         else:            
             objs = []
-            with importlib.resources.open_text("djangoquran.datas","words.csv") as f:
-                words_list = list(csv.reader(f))                
-                for surah in range(1,115):
-                    self.stdout.write(f'Loading surah {surah} of 114...')
-                    for ayah in range(1,AYAHS_PER_SURAH[surah - 1]+1):
-                        lineno = calculate_line_number(surah, ayah)-1 # since index starts with zero
-                        for position,word in enumerate(words_list[lineno]):
-                            token,meaning,lemma = word.split('|')
-                            lobj = Lemma.objects.get(token=lemma)
-                            objs.append(Word(surah=surah,ayah=ayah,
-                                position=position+1, token=token,meaning=meaning, lemma=lobj))
+            # with importlib.resources.open_text("djangoquran.datas","words.csv") as f:
+            words_list = read_csv("words.csv")  
+            for surah in range(1,115):
+                self.stdout.write(f'Loading surah {surah} of 114...')
+                for ayah in range(1,AYAHS_PER_SURAH[surah - 1]+1):
+                    lineno = calculate_line_number(surah, ayah)-1 # since index starts with zero
+                    for position,word in enumerate(words_list[lineno]):
+                        token,meaning,lemma = word.split('|')
+                        lobj = Lemma.objects.get(token=lemma)
+                        objs.append(Word(surah=surah,ayah=ayah,
+                            position=position+1, token=token,meaning=meaning, lemma=lobj))
             self.stdout.write('Running bulk create...')
             Word.objects.bulk_create(objs)
             self.stdout.write('Words completed')
