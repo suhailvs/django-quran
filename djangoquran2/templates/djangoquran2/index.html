@@ -1,10 +1,10 @@
-{% extends "djangoquran/base.html" %}
+{% extends "djangoquran2/base.html" %}
 {% block body %}
 <h1>HolyQuran</h1>
 <div class="row">
 	{% for surah in surahs %}
 	<div class="col-md-2">
-		<form class="navbar-form navbar-left" action="{% url 'djangoquran:quran_surah' %}" method="POST">
+		<form class="navbar-form navbar-left" action="{% url 'djangoquran2:quran_surah' %}" method="POST">
 			{% csrf_token %}
 			<input type="hidden" value="{{surah}}" name="surah_number">
 			<button type="submit" class="btn btn-default">Surah:<small>{{surah}}</small></button>

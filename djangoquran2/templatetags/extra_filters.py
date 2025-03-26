@@ -1,5 +1,5 @@
 from django import template
-from djangoquran.buckwalter import encode,decode
+from djangoquran2.buckwalter import encode,decode
 
 register = template.Library()
 

@@ -1,5 +1,5 @@
 
-# djangoquran
+# django-quran2
 
 Quran app for Django.
 
@@ -18,15 +18,15 @@ twine upload dist/*
 ## Quick Start
 
 
-Install from pip: `pip install djangoquran`
+Install from pip: `pip install djangoquran2`
 
-1. Add `djangoquran` to your INSTALLED_APPS setting like this::
+1. Add `djangoquran2` to your INSTALLED_APPS setting like this::
 
-    `INSTALLED_APPS = [...,"djangoquran",]`
+    `INSTALLED_APPS = [...,"djangoquran2",]`
 
-2. Include the djangoquran URLconf in your project `urls.py` like this::
+2. Include the djangoquran2 URLconf in your project `urls.py` like this::
 
-    `path("quran/", include("djangoquran.urls")),`
+    `path("quran/", include("djangoquran2.urls")),`
 
 3. Run `python manage.py migrate` to create the models.
 

@@ -1,5 +1,5 @@
 
-{% extends "djangoquran/base.html" %}
+{% extends "djangoquran2/base.html" %}
 {% load extra_filters %}
 {% block body %}
 {% for key,value in roots.items %}
@@ -7,7 +7,7 @@
   <div class="row well">
     {% for root in value %}
     <div class="col-md-3">
-      <a style="font-size: 50px;" class="arab" href="{% url 'djangoquran:quran_root' root.id %}">{{root.token|buckwalter_decode}}</a>
+      <a style="font-size: 50px;" class="arab" href="{% url 'djangoquran2:quran_root' root.id %}">{{root.token|buckwalter_decode}}</a>
     </div>
     {% endfor %}
   </div>

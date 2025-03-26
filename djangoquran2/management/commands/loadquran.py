@@ -1,5 +1,5 @@
-from django.core.management.base import BaseCommand, CommandError
-from djangoquran.models import Word, Root, Lemma
+from django.core.management.base import BaseCommand
+from djangoquran2.models import Word, Root, Lemma
 import csv
 import importlib.resources
 AYAHS_PER_SURAH = [
@@ -16,17 +16,8 @@ def calculate_line_number(surah, ayah):
     return None
 
 def read_csv(fname):
-    with importlib.resources.files("djangoquran.datas").joinpath(fname).open("r") as f:
+    with importlib.resources.files("djangoquran2.datas").joinpath(fname).open("r") as f:
         return list(csv.reader(f))
-# def read_csv_at_index(index):
-#     import csv
-
-#     with open("djangoquran/datas/quran.csv") as file:
-#         reader = list(csv.reader(file))
-#         if 0 <= index < len(reader):
-#             return reader[index]
-#         return None
-
 
 class Command(BaseCommand):
     help = "Quran commands"
@@ -39,7 +30,6 @@ class Command(BaseCommand):
             self.stdout.write('lemmas or roots table is not empty')
         else:
             objs = []
-            # with importlib.resources.open_text("djangoquran.datas",) as f:
             lemmas = read_csv("lemmas.csv")            
             for lemma in lemmas:
                 root,_= Root.objects.get_or_create(token=lemma[1])
@@ -55,7 +45,6 @@ class Command(BaseCommand):
             self.stdout.write('Word table is not empty')
         else:            
             objs = []
-            # with importlib.resources.open_text("djangoquran.datas","words.csv") as f:
             words_list = read_csv("words.csv")  
             for surah in range(1,115):
                 self.stdout.write(f'Loading surah {surah} of 114...')

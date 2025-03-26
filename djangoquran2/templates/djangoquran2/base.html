@@ -6,8 +6,8 @@
     <title>{% block head_title %}{% endblock %} HolyQuran</title>
     {% load static %} 
     {% load extra_filters %}
-    <link href="{% static "bootstrap.css" %}" rel="stylesheet">
-    <link href="{% static "style.css" %}" rel="stylesheet">
+    <link href="{% static "djangoquran2/bootstrap.css" %}" rel="stylesheet">
+    <link href="{% static "djangoquran2/style.css" %}" rel="stylesheet">
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -20,10 +20,10 @@
   <nav class="navbar navbar-default">
     <div class="container">
       <div class="navbar-header">      
-        <a class="navbar-brand" href="{% url 'djangoquran:quran_root_list' %}">Roots</a>
+        <a class="navbar-brand" href="{% url 'djangoquran2:quran_root_list' %}">Roots</a>
       </div>
       <div class="collapse navbar-collapse">
-        <form class="navbar-form navbar-left" action="{% url 'djangoquran:quran_surah' %}" method="POST">
+        <form class="navbar-form navbar-left" action="{% url 'djangoquran2:quran_surah' %}" method="POST">
           {% csrf_token %}
           <div class="form-group">
             <select class="form-control" name="surah_number">
