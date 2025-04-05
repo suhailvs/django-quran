@@ -1,0 +1,22 @@
+{% load extra_filters %}
+<!--used in word.html and root.html-->
+<table class="table table-bordered">
+	<tr><th>Similar Words</th><th>Translation</th><th>Position</th></tr>
+	{% for w in items %}
+	<tr>
+		<td>
+			<span class="arab" style="font-size: 30px">{{w.token|buckwalter_decode}}</span>
+		</td>
+		<td>{{w.meaning}}</td>
+		<td>
+			<form method="post" action="{% url 'djangoquran2:quran_surah' %}#span_{{w.ayah}}">
+				{% csrf_token %}
+				<input type="hidden" value="{{w.surah}}" name="surah_number" />
+				<button type="submit" class="btn btn-link">
+					{{w.surah}}:{{w.ayah}} at {{w.position}}
+				</button>
+			</form>
+		</td>
+	</tr>
+	{% endfor %}
+</table>

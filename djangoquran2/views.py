@@ -21,13 +21,12 @@ def word(request, word_id):
 
 
 def root_list(request):
-    conditions = [When(token__startswith=l, then=Value(l)) for l in LETTERS_ONLY]
-    letter_group = Case(*conditions, default=Value("Other"), output_field=CharField())
-    roots = Root.objects.values("token", "id").annotate(group=letter_group)
-    root_group = {l: roots.filter(group=l) for l in LETTERS_ONLY}
+    get_roots_startswith = lambda l: Root.objects.extra(where=["SUBSTR(token, 1, %s) = %s"],params=[1, l]).order_by('token')
+    root_group = {l: get_roots_startswith(l) for l in LETTERS_ONLY}
     return render(request, "djangoquran2/root_list.html", {"roots": root_group})
 
 
 def root(request, root_id):
     words = Word.objects.filter(lemma__root_id=root_id)
-    return render(request, "djangoquran2/root.html", {"words": words})
+    root_token = Root.objects.get(id=root_id).token 
+    return render(request, "djangoquran2/root.html", {"words": words,'root':root_token})

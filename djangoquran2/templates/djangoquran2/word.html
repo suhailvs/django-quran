@@ -5,11 +5,5 @@
 	{{ word.token|buckwalter_decode }} 
 	<small><span class="label label-default">{{word.meaning}}</span></small>
 </div> 
-
-<table class="table table-bordered">
-	<tr><th>Similar Words</th><th>Translation</th><th>Position</th></tr>
-	{% for w in word.lemma.word_set.all %}
-	<tr><td>{{w.token|buckwalter_decode}}</td><td>{{w.meaning}}</td><td>({{w.surah}}:{{w.ayah}}:{{w.position}})</td></tr>
-	{% endfor %}
-</table>
+{% include "djangoquran2/_table.html" with items=word.lemma.word_set.all %}
 {% endblock %} 

@@ -2,11 +2,12 @@
 {% extends "djangoquran2/base.html" %}
 {% load extra_filters %}
 {% block body %}
+|{% for key in roots %} <a style="font-size: 20px" href="#let_{{forloop.counter}}">{{ key|buckwalter_decode }}</a> |{%endfor %}
 {% for key,value in roots.items %}
-  <h1 id="ا" style="text-align: center;">{{key|buckwalter_decode}}</h1>
+  <h1 id="let_{{forloop.counter}}" style="text-align: center;">{{key|buckwalter_decode}} <small>({{value|length}})</small></h1>
   <div class="row well">
     {% for root in value %}
-    <div class="col-md-3">
+    <div class="col-md-2">
       <a style="font-size: 50px;" class="arab" href="{% url 'djangoquran2:quran_root' root.id %}">{{root.token|buckwalter_decode}}</a>
     </div>
     {% endfor %}
